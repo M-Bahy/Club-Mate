@@ -12,7 +12,7 @@ export class Member {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('members')
+  @Column()
   firstName: string;
 
   @Column()
