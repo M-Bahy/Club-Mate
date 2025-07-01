@@ -3,15 +3,13 @@ import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 
-@Controller('member')
+@Controller('members')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
-
-  @Post()
-  create(@Body() createMemberDto: CreateMemberDto) {
-    return this.memberService.create(createMemberDto);
-  }
-
+@Post()
+async create(@Body() createMemberDto: CreateMemberDto) {
+  return this.memberService.create(createMemberDto);
+}
   @Get()
   findAll() {
     return this.memberService.findAll();

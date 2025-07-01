@@ -13,7 +13,7 @@ export class CreateMemberDto {
     gender: Gender;
 
     @IsDateString()
-    dob: string;
+    dob: string; // expected format: YYYY-MM-DD
 
     @IsDateString()
     @IsOptional()
