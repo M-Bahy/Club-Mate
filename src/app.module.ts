@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/supabase.module';
 import { MemberModule } from './member/member.module';
+import { SportModule } from './sport/sport.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { MemberModule } from './member/member.module';
     }),
     SupabaseModule,
     MemberModule,
+    SportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
