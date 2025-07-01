@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Gender } from '../enums/gender.enum';
 
-@Entity()
+@Entity('members')
 export class Member {
   @PrimaryGeneratedColumn('uuid')
   id: string;
