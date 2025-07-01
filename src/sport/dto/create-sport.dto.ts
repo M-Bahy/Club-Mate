@@ -15,7 +15,7 @@ export class CreateSportDto {
 
   @IsNumber()
   @IsPositive()
-  price: number;
+  price: number; // A constraint is also added in supabase to ensure the price is a positive number
 
   @IsEnum(Gender)
   allowedGender: Gender;
