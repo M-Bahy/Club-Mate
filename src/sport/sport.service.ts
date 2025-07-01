@@ -77,24 +77,6 @@ export class SportService {
     return data;
   }
 
-  async findOne(id: string): Promise<Sport> {
-    const { data, error } = await this.supabase
-      .from('sports')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (error) {
-      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-    }
-
-    if (!data) {
-      throw new HttpException('Sport not found', HttpStatus.NOT_FOUND);
-    }
-
-    return data;
-  }
-
   async update(id: string, updateSportDto: UpdateSportDto): Promise<Sport> {
     const { data, error } = await this.supabase
       .from('sports')
@@ -122,5 +104,23 @@ export class SportService {
     }
     await this.cacheManager.del(this.CACHE_KEY);
     return `Sport with id ${id} deleted successfully`;
+  }
+
+  async findOne(id: string): Promise<Sport> { // ----> extra method, wasn't required in the Task
+    const { data, error } = await this.supabase
+      .from('sports')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
+
+    if (!data) {
+      throw new HttpException('Sport not found', HttpStatus.NOT_FOUND);
+    }
+
+    return data;
   }
 }

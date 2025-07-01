@@ -44,23 +44,6 @@ export class MemberService {
     return data;
   }
 
-  async findAll(): Promise<Member[]> {
-    const { data, error } = await this.supabase.from('members').select('*');
-
-    if (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    }
-
-    if (!data) {
-      throw new HttpException(
-        'No data returned from database',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-
-    return data;
-  }
-
   async findOne(id: string): Promise<Member> {
     const { data, error } = await this.supabase
       .from('members')
@@ -105,5 +88,22 @@ export class MemberService {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
     return `Member with id ${id} removed successfully`;
+  }
+
+  async findAll(): Promise<Member[]> { // ----> extra method, wasn't required in the Task
+    const { data, error } = await this.supabase.from('members').select('*');
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+
+    if (!data) {
+      throw new HttpException(
+        'No data returned from database',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    return data;
   }
 }
