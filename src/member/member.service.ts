@@ -1,28 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, OnModuleInit } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { SupabaseService } from '../supabase/supabase.service';
-import { log } from 'console';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { Member } from './entities/member.entity';
 
 @Injectable()
 export class MemberService {
+  private supabase: SupabaseClient;
 
-  private readonly supabase;
+  constructor(private readonly supabaseService: SupabaseService) {}
 
-  constructor(private readonly supabaseService: SupabaseService) {
+  onModuleInit() {
     this.supabase = this.supabaseService.getClient();
-    
+    if (!this.supabase) {
+      throw new Error('Failed to initialize Supabase client');
+    }
   }
 
-  async create(createMemberDto: CreateMemberDto) {
-
+  async create(createMemberDto: CreateMemberDto): Promise<Member> {
     const { data, error } = await this.supabase
       .from('members')
-      .insert(createMemberDto)
-      .select();
+      .insert([createMemberDto])
+      .select()
+      .single(); 
 
     if (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
 
     if (!data) {
