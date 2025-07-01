@@ -25,16 +25,16 @@ export class MemberController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.memberService.findOne(+id);
+    return this.memberService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
-    return this.memberService.update(+id, updateMemberDto);
+    return this.memberService.update(id, updateMemberDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.memberService.remove(+id);
+    return this.memberService.remove(id);
   }
 }

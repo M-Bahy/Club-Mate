@@ -53,15 +53,29 @@ export class MemberService {
 }
 
 
-  findOne(id: number) {
-    return `This action returns a #${id} member`;
+  async findOne(id: string) : Promise<Member> {
+    const { data, error } = await this.supabase
+      .from('members')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
+
+    if (!data) {
+      throw new HttpException('Member not found', HttpStatus.NOT_FOUND);
+    }
+
+    return data;
   }
 
-  update(id: number, updateMemberDto: UpdateMemberDto) {
+  update(id: string, updateMemberDto: UpdateMemberDto) {
     return `This action updates a #${id} member`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} member`;
   }
 }
