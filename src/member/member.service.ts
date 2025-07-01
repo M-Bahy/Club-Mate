@@ -82,11 +82,21 @@ export class MemberService {
   }
 
   async remove(id: string): Promise<string> {
-    const { error } = await this.supabase.from('members').delete().eq('id', id);
+    const { data, error } = await this.supabase
+      .from('members')
+      .delete()
+      .eq('id', id)
+      .select('id')
+      .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        // Supabase: No rows found
+        return `Member with id ${id} was not found, nothing to delete`;
+      }
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+
     return `Member with id ${id} removed successfully`;
   }
 

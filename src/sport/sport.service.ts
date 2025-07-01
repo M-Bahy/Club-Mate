@@ -97,11 +97,21 @@ export class SportService {
   }
 
   async remove(id: string): Promise<string> {
-    const { error } = await this.supabase.from('sports').delete().eq('id', id);
+    const { data, error } = await this.supabase
+      .from('sports')
+      .delete()
+      .eq('id', id)
+      .select('id')
+      .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        // Supabase: No rows found
+        return `Sport with id ${id} was not found, nothing to delete`;
+      }
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+
     await this.cacheManager.del(this.CACHE_KEY);
     return `Sport with id ${id} deleted successfully`;
   }
