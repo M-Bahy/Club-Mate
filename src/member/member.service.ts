@@ -36,9 +36,22 @@ export class MemberService {
     return data;
   }
 
-  findAll() {
-    return `This action returns all member`;
+  async findAll(): Promise<Member[]> {
+  const { data, error } = await this.supabase
+    .from('members')
+    .select('*');
+
+  if (error) {
+    throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
   }
+
+  if (!data) {
+    throw new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  return data;
+}
+
 
   findOne(id: number) {
     return `This action returns a #${id} member`;
