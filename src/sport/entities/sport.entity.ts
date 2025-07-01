@@ -16,7 +16,7 @@ export class Sport {
   name: string;
 
   @Column({ type: 'decimal', scale: 2 })
-  price: number; // A Database-Level Constraint is added too in Supabase SQL Editor
+  price: number;
 
   @Column({
     type: 'enum',
