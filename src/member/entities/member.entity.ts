@@ -34,7 +34,7 @@ export class Member {
     type: 'uuid',
     nullable: true,
   })
-  associatedMemberId?: string;
+  associatedMemberId?: string; // Constraint added in supabase sql editor: on update cascade and on delete set null 
 
   @CreateDateColumn()
   createdAt: Date;
