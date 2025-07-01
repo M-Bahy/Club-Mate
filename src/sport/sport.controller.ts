@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  Header,
 } from '@nestjs/common';
 import { SportService } from './sport.service';
 import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
 import { Sport } from './entities/sport.entity';
+import { CacheModule, CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('sports')
 export class SportController {
@@ -22,6 +25,9 @@ export class SportController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(300) // Cache for 5 minutes
+  @Header('Cache-Control', 'public, max-age=300') // Tell the client to cache for 5 minutes
   findAll(): Promise<Sport[]> {
     return this.sportService.findAll();
   }
