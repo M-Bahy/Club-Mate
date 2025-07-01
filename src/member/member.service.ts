@@ -71,11 +71,34 @@ export class MemberService {
     return data;
   }
 
-  update(id: string, updateMemberDto: UpdateMemberDto) {
-    return `This action updates a #${id} member`;
+async update(id: string, updateMemberDto: UpdateMemberDto): Promise<Member> {
+  const { data, error } = await this.supabase
+    .from('members')
+    .update(updateMemberDto)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} member`;
+  if (!data) {
+    throw new HttpException('Member not found', HttpStatus.NOT_FOUND);
   }
+
+  return data;
+}
+
+ async remove(id: string): Promise<string> {
+  const { error } = await this.supabase
+    .from('members')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+  }
+  return `Member with id ${id} removed successfully`;
+}
 }
