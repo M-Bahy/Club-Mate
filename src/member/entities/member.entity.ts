@@ -40,5 +40,5 @@ export class Member {
   createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date; // auto-updated on every update via supabase procedure
 }

@@ -16,7 +16,7 @@ export class Sport {
   name: string;
 
   @Column({ type: 'decimal', scale: 2 })
-  price: number;
+  price: number; // A Database-Level Constraint is added in Supabase SQL Editor to ensure price is greater than 0
 
   @Column({
     type: 'enum',
@@ -28,5 +28,5 @@ export class Sport {
   createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date; // auto-updated on every update via supabase procedure
 }
