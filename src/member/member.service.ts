@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
-import {SupabaseService} from '../supabase/supabase.service';
+import { SupabaseService } from '../supabase/supabase.service';
 import { log } from 'console';
 
 @Injectable()
@@ -10,16 +10,16 @@ export class MemberService {
 
   async create(createMemberDto: CreateMemberDto) {
     const supabase = this.supabaseService.getClient();
-    
+
     const { data, error } = await supabase
       .from('members')
       .insert(createMemberDto)
       .select();
-          
+
     if (error) {
       throw new Error(error.message);
     }
-  
+
     if (!data) {
       throw new Error('No data returned from database');
     }

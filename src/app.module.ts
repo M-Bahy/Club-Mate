@@ -7,12 +7,12 @@ import { MemberModule } from './member/member.module';
 
 @Module({
   imports: [
-            ConfigModule.forRoot({
-              isGlobal: true, 
-            }),
-            SupabaseModule,
-            MemberModule,
-          ],
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    SupabaseModule,
+    MemberModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

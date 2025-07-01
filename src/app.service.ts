@@ -7,6 +7,6 @@ export class AppService {
   }
 
   myName(): string {
-    return " <h1>My name is Bahy</h1> ";
+    return ' <h1>My name is Bahy</h1> ';
   }
 }
