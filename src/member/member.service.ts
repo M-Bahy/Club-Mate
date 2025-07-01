@@ -6,12 +6,17 @@ import { log } from 'console';
 
 @Injectable()
 export class MemberService {
-  constructor(private readonly supabaseService: SupabaseService) {}
+
+  private readonly supabase;
+
+  constructor(private readonly supabaseService: SupabaseService) {
+    this.supabase = this.supabaseService.getClient();
+    
+  }
 
   async create(createMemberDto: CreateMemberDto) {
-    const supabase = this.supabaseService.getClient();
 
-    const { data, error } = await supabase
+    const { data, error } = await this.supabase
       .from('members')
       .insert(createMemberDto)
       .select();
