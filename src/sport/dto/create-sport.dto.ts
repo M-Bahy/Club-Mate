@@ -10,13 +10,13 @@ import {
 import { Gender } from '../enums/gender.enum';
 
 export class CreateSportDto {
-    @IsString()
-    name: string;
-    
-    @IsNumber()
-    @IsPositive()
-    price: number;
-    
-    @IsEnum(Gender)
-    allowedGender: Gender;
+  @IsString()
+  name: string;
+
+  @IsNumber()
+  @IsPositive()
+  price: number;
+
+  @IsEnum(Gender)
+  allowedGender: Gender;
 }

@@ -35,7 +35,10 @@ export class MemberService {
     }
 
     if (!data) {
-      throw new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'No data returned from database',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
 
     return data;

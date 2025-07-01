@@ -12,7 +12,6 @@ import { Sport } from './entities/sport.entity';
 
 @Injectable()
 export class SportService {
-
   private supabase: SupabaseClient;
 
   constructor(private readonly supabaseService: SupabaseService) {}
@@ -36,16 +35,17 @@ export class SportService {
     }
 
     if (!data) {
-      throw new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'No data returned from database',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
 
     return data;
   }
 
   async findAll(): Promise<Sport[]> {
-    const { data, error } = await this.supabase
-      .from('sports')
-      .select('*');
+    const { data, error } = await this.supabase.from('sports').select('*');
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
@@ -58,7 +58,7 @@ export class SportService {
       );
     }
 
-    return data ;
+    return data;
   }
 
   async findOne(id: string): Promise<Sport> {
@@ -99,10 +99,7 @@ export class SportService {
   }
 
   async remove(id: string): Promise<string> {
-    const { error } = await this.supabase
-      .from('sports')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from('sports').delete().eq('id', id);
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
