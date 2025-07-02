@@ -7,6 +7,6 @@ import { SupabaseModule } from '../supabase/supabase.module';
   imports: [SupabaseModule],
   controllers: [MemberController],
   providers: [MemberService],
-  exports: [MemberService], 
+  exports: [MemberService],
 })
 export class MemberModule {}

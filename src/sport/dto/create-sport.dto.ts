@@ -1,9 +1,4 @@
-import {
-  IsString,
-  IsEnum,
-  IsNumber,
-  IsPositive,
-} from 'class-validator';
+import { IsString, IsEnum, IsNumber, IsPositive } from 'class-validator';
 import { Gender } from '../enums/gender.enum';
 
 export class CreateSportDto {

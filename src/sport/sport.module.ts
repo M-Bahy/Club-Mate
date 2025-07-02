@@ -13,6 +13,6 @@ import { SupabaseModule } from '../supabase/supabase.module';
   ],
   controllers: [SportController],
   providers: [SportService],
-  exports: [SportService], 
+  exports: [SportService],
 })
 export class SportModule {}

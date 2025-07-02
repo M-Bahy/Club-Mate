@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Member } from '../../member/entities/member.entity';
 import { Sport } from '../../sport/entities/sport.entity';
-import { SubscriptionType } from '../enums/subscription-type.enum'; 
+import { SubscriptionType } from '../enums/subscription-type.enum';
 
 @Entity('subscriptions')
 @Unique(['memberId', 'sportId']) // Ensures one subscription per member per sport
@@ -24,11 +24,11 @@ export class Subscription {
   @Column('date')
   subscriptionDate: Date;
 
-    @Column({
-        type: 'enum',
-        enum: SubscriptionType,
-    })
-    subscriptionType: SubscriptionType;
+  @Column({
+    type: 'enum',
+    enum: SubscriptionType,
+  })
+  subscriptionType: SubscriptionType;
 
   // Relations (useful for queries)
   @ManyToOne(() => Member)
