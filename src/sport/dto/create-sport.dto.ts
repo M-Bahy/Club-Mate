@@ -1,9 +1,6 @@
 import {
   IsString,
   IsEnum,
-  IsDateString,
-  IsOptional,
-  IsUUID,
   IsNumber,
   IsPositive,
 } from 'class-validator';
