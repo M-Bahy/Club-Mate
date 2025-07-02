@@ -86,6 +86,10 @@ export class SportService {
       .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        // Supabase: No rows found
+        throw new HttpException('Sport not found', HttpStatus.NOT_FOUND);
+      }
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
 
@@ -124,6 +128,10 @@ export class SportService {
       .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        // Supabase: No rows found
+        throw new HttpException('Sport not found', HttpStatus.NOT_FOUND);
+      }
       throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }
 
