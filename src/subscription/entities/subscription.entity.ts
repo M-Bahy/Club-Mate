@@ -19,10 +19,10 @@ export class Subscription {
   id: string;
 
   @Column('uuid')
-  memberId: string;
+  memberId: string; // A Database-Level Constraint was added in supabase to cascade on update/delete
 
   @Column('uuid')
-  sportId: string;
+  sportId: string; // A Database-Level Constraint was added in supabase to cascade on update/delete
 
   @Column('date')
   subscriptionDate: Date;
