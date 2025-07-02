@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/supabase.module';
 import { MemberModule } from './member/member.module';
 import { SportModule } from './sport/sport.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { SportModule } from './sport/sport.module';
     SupabaseModule,
     MemberModule,
     SportModule,
+    SubscriptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
