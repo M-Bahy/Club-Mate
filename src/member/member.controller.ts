@@ -38,7 +38,7 @@ export class MemberController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<string> {
+  remove(@Param('id') id: string): Promise<Member> {
     return this.memberService.remove(id);
   }
 }
