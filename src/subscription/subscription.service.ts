@@ -12,6 +12,7 @@ import { MemberService } from '../member/member.service';
 import { SportService } from '../sport/sport.service';
 import { SubscriptionType } from './enums/subscription-type.enum';
 import { Subscription } from './entities/subscription.entity';
+import { UnsubscribeDto } from './dto/unsubscribe.dto';
 
 @Injectable()
 export class SubscriptionService {
@@ -76,7 +77,23 @@ export class SubscriptionService {
     return `This action updates a #${id} subscription`;
   }
 
-  async unsubscribe(id: string) {
-    return `This action removes a #${id} subscription`;
+  async unsubscribe(unsubscribeDto: UnsubscribeDto) {
+    const { data, error } = await this.supabase
+      .from('subscriptions')
+      .delete()
+      .eq('memberId', unsubscribeDto.memberId)
+      .eq('sportId', unsubscribeDto.sportId)  
+      .select()
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // Supabase: No rows found
+        return `Subscription for user with id ${unsubscribeDto.memberId} and sport with id ${unsubscribeDto.sportId} was not found, nothing to delete`;
+      }
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+
+    return `User with id ${unsubscribeDto.memberId} unsubscribed from sport with id ${unsubscribeDto.sportId} successfully`;
   }
 }
