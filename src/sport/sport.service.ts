@@ -60,7 +60,7 @@ export class SportService {
       return cached;
     }
 
-    const { data, error } = await this.supabase.from('sports').select('*');
+    const { data, error } = await this.supabase.from('sports').select();
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
@@ -119,7 +119,7 @@ export class SportService {
   async findOne(id: string): Promise<Sport> {
     const { data, error } = await this.supabase
       .from('sports')
-      .select('*')
+      .select()
       .eq('id', id)
       .single();
 

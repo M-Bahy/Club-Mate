@@ -47,7 +47,7 @@ export class MemberService {
   async findOne(id: string): Promise<Member> {
     const { data, error } = await this.supabase
       .from('members')
-      .select('*')
+      .select()
       .eq('id', id)
       .single();
 
@@ -108,7 +108,7 @@ export class MemberService {
   }
 
   async findAll(): Promise<Member[]> {
-    const { data, error } = await this.supabase.from('members').select('*');
+    const { data, error } = await this.supabase.from('members').select();
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
