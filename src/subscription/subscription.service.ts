@@ -32,7 +32,27 @@ export class SubscriptionService {
   }
 
   async create(createSubscriptionDto: CreateSubscriptionDto) {
-    return 'This action adds a new subscription';
+    // DB constrains already in place to check that the member and sport exists 
+    // and check that their combination is unique, so no need to add additional checks here.
+    const { data, error } = await this.supabase
+      .from('subscriptions')
+      .insert([createSubscriptionDto])
+      .select()
+      .single();
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+
+    if (!data) {
+      throw new HttpException(
+        'No data returned from database',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    return data;
+
   }
 
   async findAll() {
