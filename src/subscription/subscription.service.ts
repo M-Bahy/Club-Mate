@@ -36,7 +36,17 @@ export class SubscriptionService {
     const { data, error } = await this.supabase
       .from('subscriptions')
       .insert([createSubscriptionDto])
-      .select()
+      .select(`*,
+        member:memberId (
+          id,
+          firstName,
+          lastName
+        ),
+        sport:sportId (
+          id,
+          name,
+          price
+        )`)
       .single();
 
     if (error) {
@@ -56,7 +66,17 @@ export class SubscriptionService {
   async findAll() : Promise<Subscription[]> {
     const { data, error } = await this.supabase
       .from('subscriptions')
-      .select();
+      .select(`*,
+        member:memberId (
+          id,
+          firstName,
+          lastName
+        ),
+        sport:sportId (
+          id,
+          name,
+          price
+        )`);
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -69,10 +89,23 @@ export class SubscriptionService {
   }
 
   async findByMemberId(memberId: string) : Promise<Subscription[]> {
+
+    const memberExists = await this.memberService.findOne(memberId);
+    if (!memberExists) {
+      throw new HttpException(
+        `Member with ID ${memberId} does not exist`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
     
     const { data, error } = await this.supabase
       .from('subscriptions')
-      .select()
+      .select(`*,
+        sport:sportId (
+          id,
+          name,
+          price
+        )`)
       .eq('memberId', memberId);
 
     if (error) {
@@ -90,9 +123,23 @@ export class SubscriptionService {
   }
 
   async findBySportId(sportId: string) : Promise<Subscription[]> {
+
+    const sportExists = await this.sportService.findOne(sportId);
+    if (!sportExists) {
+      throw new HttpException(
+        `Sport with ID ${sportId} does not exist`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
     const { data, error } = await this.supabase
       .from('subscriptions')
-      .select()
+      .select(`*,
+        member:memberId (
+          id,
+          firstName,
+          lastName
+        )`)
       .eq('sportId', sportId);
 
     if (error) {
