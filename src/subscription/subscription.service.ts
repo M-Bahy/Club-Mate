@@ -15,7 +15,6 @@ import { Subscription } from './entities/subscription.entity';
 
 @Injectable()
 export class SubscriptionService {
-
   private supabase: SupabaseClient;
 
   constructor(
@@ -32,7 +31,7 @@ export class SubscriptionService {
   }
 
   async subscribe(createSubscriptionDto: CreateSubscriptionDto) {
-    // DB constrains already in place to check that the member and sport exists 
+    // DB constrains already in place to check that the member and sport exists
     // and check that their combination is unique, so no need to add additional checks here.
     const { data, error } = await this.supabase
       .from('subscriptions')
@@ -52,11 +51,21 @@ export class SubscriptionService {
     }
 
     return data;
-
   }
 
   async findAll() {
-    return `This action returns all subscription`;
+    const { data, error } = await this.supabase
+      .from('subscriptions')
+      .select('*');
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    if (!data) {
+      throw new HttpException('No subscriptions found', HttpStatus.NOT_FOUND);
+    }
+
+    return data;
   }
 
   async findOne(id: string) {
