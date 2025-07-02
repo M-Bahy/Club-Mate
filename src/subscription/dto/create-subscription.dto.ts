@@ -14,7 +14,7 @@ export class CreateSubscriptionDto {
     sportId: string; // A Database-Level Constraint was added in supabase to cascade on update/delete
     
     @IsDateString()
-    subscriptionDate: Date;
+    subscriptionDate: Date; // format: YYYY-MM-DD
     
     @IsEnum(SubscriptionType)
     subscriptionType: SubscriptionType;
