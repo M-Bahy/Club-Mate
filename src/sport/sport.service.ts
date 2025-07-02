@@ -116,7 +116,7 @@ export class SportService {
     return `Sport with id ${id} deleted successfully`;
   }
 
-  async findOne(id: string): Promise<Sport> { // ----> extra method, wasn't required in the Task
+  async findOne(id: string): Promise<Sport> { 
     const { data, error } = await this.supabase
       .from('sports')
       .select('*')

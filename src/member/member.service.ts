@@ -100,7 +100,7 @@ export class MemberService {
     return `Member with id ${id} removed successfully`;
   }
 
-  async findAll(): Promise<Member[]> { // ----> extra method, wasn't required in the Task
+  async findAll(): Promise<Member[]> { 
     const { data, error } = await this.supabase.from('members').select('*');
 
     if (error) {
