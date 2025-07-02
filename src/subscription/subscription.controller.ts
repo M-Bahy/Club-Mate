@@ -10,7 +10,7 @@ import {
 import { SubscriptionService } from './subscription.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
-import { UnsubscribeDto } from './dto/unsubscribe.dto';
+import { ModifySubscriptionDto } from './dto/modify-subscription.dto';
 import { Subscription } from './entities/subscription.entity';
 
 @Controller('subscriptions')
@@ -41,7 +41,7 @@ export class SubscriptionController {
   }
 
   @Delete()
-  remove(@Body() unsubscribeDto: UnsubscribeDto) : Promise<string> {
-    return this.subscriptionService.unsubscribe(unsubscribeDto);
+  remove(@Body() modifySubscriptionDto: ModifySubscriptionDto) : Promise<string> {
+    return this.subscriptionService.unsubscribe(modifySubscriptionDto);
   }
 }

@@ -1,6 +1,6 @@
 import { IsUUID } from 'class-validator';
 
-export class UnsubscribeDto {
+export class ModifySubscriptionDto {
   @IsUUID()
   memberId: string; // A Database-Level Constraint was added in supabase to cascade on update/delete
 
