@@ -73,8 +73,42 @@ export class SubscriptionService {
     return `This action returns a #${id} subscription`;
   }
 
-  async update(id: string, updateSubscriptionDto: UpdateSubscriptionDto) {
-    return `This action updates a #${id} subscription`;
+  async update(updateSubscriptionDto: UpdateSubscriptionDto) : Promise<Subscription> {
+
+    if (!updateSubscriptionDto.memberId || !updateSubscriptionDto.sportId) {
+      throw new HttpException(
+        'Member ID and Sport ID are required to update a subscription',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    
+    const { data, error } = await this.supabase
+      .from('subscriptions')
+      .update(updateSubscriptionDto)
+      .eq('memberId', updateSubscriptionDto.memberId)
+      .eq('sportId', updateSubscriptionDto.sportId)
+      .select()
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // Supabase: No rows found
+        throw new HttpException(
+          'No subscription found to update',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+
+    if (!data) {
+      throw new HttpException(
+        'No subscription found to update',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return data;
   }
 
   async unsubscribe(unsubscribeDto: UnsubscribeDto) : Promise<string> {

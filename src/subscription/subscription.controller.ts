@@ -32,12 +32,11 @@ export class SubscriptionController {
     return this.subscriptionService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch()
   update(
-    @Param('id') id: string,
     @Body() updateSubscriptionDto: UpdateSubscriptionDto,
-  ) {
-    return this.subscriptionService.update(id, updateSubscriptionDto);
+  ) : Promise<Subscription> {
+    return this.subscriptionService.update(updateSubscriptionDto);
   }
 
   @Delete()
