@@ -46,7 +46,7 @@ export class SportController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<string> {
+  remove(@Param('id') id: string): Promise<Sport> {
     return this.sportService.remove(id);
   }
 }
