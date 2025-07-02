@@ -31,7 +31,7 @@ export class SubscriptionService {
     }
   }
 
-  async create(createSubscriptionDto: CreateSubscriptionDto) {
+  async subscribe(createSubscriptionDto: CreateSubscriptionDto) {
     // DB constrains already in place to check that the member and sport exists 
     // and check that their combination is unique, so no need to add additional checks here.
     const { data, error } = await this.supabase
@@ -67,7 +67,7 @@ export class SubscriptionService {
     return `This action updates a #${id} subscription`;
   }
 
-  async remove(id: string) {
+  async unsubscribe(id: string) {
     return `This action removes a #${id} subscription`;
   }
 }

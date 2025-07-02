@@ -9,7 +9,7 @@ export class SubscriptionController {
 
   @Post()
   create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
-    return this.subscriptionService.create(createSubscriptionDto);
+    return this.subscriptionService.subscribe(createSubscriptionDto);
   }
 
   @Get()
@@ -29,6 +29,6 @@ export class SubscriptionController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.subscriptionService.remove(id);
+    return this.subscriptionService.unsubscribe(id);
   }
 }
