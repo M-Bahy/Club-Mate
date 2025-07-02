@@ -15,9 +15,6 @@ import { SubscriptionType } from '../enums/subscription-type.enum';
 @Entity('subscriptions')
 @Unique(['memberId', 'sportId']) // Ensures one subscription per member per sport
 export class Subscription {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
   @Column('uuid')
   memberId: string; // A Database-Level Constraint was added in supabase to cascade on update/delete
 
