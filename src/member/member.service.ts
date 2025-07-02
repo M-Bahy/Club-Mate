@@ -71,6 +71,10 @@ export class MemberService {
       .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        // Supabase: No rows found
+        throw new HttpException('Member not found', HttpStatus.NOT_FOUND);
+      }
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
 
