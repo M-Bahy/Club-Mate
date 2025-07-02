@@ -36,6 +36,8 @@ export class Member {
   })
   associatedMemberId?: string; // Constraint added in supabase sql editor: on update cascade and on delete set null
 
+  // I assumed that the member's subscription date is the subscription date to a sport, this can be found in the Subscription entity
+
   @CreateDateColumn()
   createdAt: Date;
 
