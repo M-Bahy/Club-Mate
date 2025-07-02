@@ -20,10 +20,6 @@ export class CreateMemberDto {
   @IsDateString()
   dob: string; // expected format: YYYY-MM-DD
 
-  @IsDateString()
-  @IsOptional()
-  subscriptionDate?: string;
-
   @IsUUID()
   @IsOptional()
   associatedMemberId?: string;
