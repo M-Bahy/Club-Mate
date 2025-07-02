@@ -27,9 +27,14 @@ export class SubscriptionController {
     return this.subscriptionService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subscriptionService.findOne(id);
+  @Get('/member/:memberId')
+  findOne(@Param('memberId') memberId: string) : Promise<Subscription[]> {
+    return this.subscriptionService.findByMemberId(memberId);
+  }
+
+  @Get('/sport/:sportId')
+  findBySportId(@Param('sportId') sportId: string) : Promise<Subscription[]> {
+    return this.subscriptionService.findBySportId(sportId);
   }
 
   @Patch()

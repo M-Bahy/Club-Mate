@@ -10,7 +10,6 @@ import { SupabaseService } from '../supabase/supabase.service';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { MemberService } from '../member/member.service';
 import { SportService } from '../sport/sport.service';
-import { SubscriptionType } from './enums/subscription-type.enum';
 import { Subscription } from './entities/subscription.entity';
 import { UnsubscribeDto } from './dto/unsubscribe.dto';
 
@@ -69,8 +68,45 @@ export class SubscriptionService {
     return data;
   }
 
-  async findOne(id: string) {
-    return `This action returns a #${id} subscription`;
+  async findByMemberId(memberId: string) : Promise<Subscription[]> {
+    
+    const { data, error } = await this.supabase
+      .from('subscriptions')
+      .select()
+      .eq('memberId', memberId);
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    if (!data) {
+      throw new HttpException(
+        `No subscriptions found for member with ID ${memberId}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return data;
+  }
+
+  async findBySportId(sportId: string) : Promise<Subscription[]> {
+    const { data, error } = await this.supabase
+      .from('subscriptions')
+      .select()
+      .eq('sportId', sportId);
+
+    if (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    if (!data) {
+      throw new HttpException(
+        `No subscriptions found for sport with ID ${sportId}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return data;
   }
 
   async update(updateSubscriptionDto: UpdateSubscriptionDto) : Promise<Subscription> {
