@@ -218,11 +218,20 @@ http://localhost:3000
 
 ### Data Models
 
-#### Gender Enum
+#### Gender Enum For Members
 ```typescript
 enum Gender {
   MALE = 'male',
   FEMALE = 'female'
+}
+```
+
+#### Gender Enum For Sports
+```typescript
+enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+  MIX = 'mix',
 }
 ```
 
