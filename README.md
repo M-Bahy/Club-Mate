@@ -8,7 +8,6 @@ A comprehensive backend system for managing sport club operations including memb
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Environment Setup](#environment-setup)
 - [Running the Application](#running-the-application)
 - [API Documentation](#api-documentation)
   - [Members API](#members-api)
@@ -56,30 +55,6 @@ Before you begin, ensure you have the following installed:
    ```bash
    npm install
    ```
-
-## Environment Setup
-
-1. **Create environment file**
-   ```bash
-   cp .env.example .env
-   ```
-
-2. **Configure environment variables**
-   
-   Update the `.env` file with your Supabase credentials:
-   ```env
-   # Supabase Configuration
-   SUPABASE_URL=your_supabase_project_url
-   SUPABASE_KEY=your_supabase_anon_key
-   
-   # Application Configuration
-   PORT=3000
-   NODE_ENV=development
-   ```
-
-3. **Database Setup**
-   
-   Ensure your Supabase database is set up with the required tables for members, sports, and subscriptions. The application uses TypeORM entities to define the database schema.
 
 ## Running the Application
 
