@@ -36,7 +36,6 @@ A comprehensive backend system for managing sport club operations including memb
 - **ORM**: [TypeORM](https://typeorm.io/)
 - **Validation**: [class-validator](https://github.com/typestack/class-validator)
 - **Testing**: [Jest](https://jestjs.io/)
-- **Caching**: [cache-manager](https://github.com/BryanDonovan/node-cache-manager)
 
 ## Prerequisites
 
