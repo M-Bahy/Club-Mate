@@ -234,6 +234,13 @@ describe('SportController', () => {
     });
 
     it('should call service methods with correct parameters', async () => {
+      // Set up fresh mock implementations for this test
+      mockSportService.create.mockResolvedValue(mockSport);
+      mockSportService.findAll.mockResolvedValue([mockSport]);
+      mockSportService.findOne.mockResolvedValue(mockSport);
+      mockSportService.update.mockResolvedValue(mockSport);
+      mockSportService.remove.mockResolvedValue(mockSport);
+
       // Test that controller passes parameters correctly to service
       await controller.create(mockCreateSportDto);
       await controller.findAll();
