@@ -24,7 +24,7 @@ A comprehensive backend system for managing sport club operations including memb
 - ⚽ **Sport Management**: Manage different sports with pricing and gender restrictions
 - 📝 **Subscription Management**: Handle member subscriptions to sports with different types (group/private)
 - 🛡️ **Data Validation**: Comprehensive input validation using class-validator
-- ⚡ **Caching**: Redis-based caching for better performance
+- ⚡ **Caching**: Application-level caching using NestJS built-in cache manager
 - 🔄 **Real-time Database**: Supabase integration for real-time data management
 - 🧪 **Testing**: Comprehensive unit and e2e testing setup
 
