@@ -16,7 +16,6 @@ A comprehensive backend system for managing sport club operations including memb
   - [Subscriptions API](#subscriptions-api)
 - [Testing](#testing)
 - [Project Structure](#project-structure)
-- [Contributing](#contributing)
 
 ## Features
 
@@ -314,18 +313,3 @@ src/
 - `npm run test:debug` - Run tests in debug mode
 - `npm run test:e2e` - Run end-to-end tests
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the UNLICENSED License.
-
----
-
-**Repository**: [https://github.com/M-Bahy/sport-club-managment.git](https://github.com/M-Bahy/sport-club-managment.git)
