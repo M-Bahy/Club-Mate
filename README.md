@@ -26,7 +26,7 @@ A comprehensive backend system for managing sport club operations including memb
 - 🛡️ **Data Validation**: Comprehensive input validation using class-validator
 - ⚡ **Caching**: Application-level caching using NestJS built-in cache manager
 - 🔄 **Real-time Database**: Supabase integration for real-time data management
-- 🧪 **Testing**: Comprehensive unit and e2e testing setup
+- 🧪 **Testing**: Comprehensive unit testing setup
 
 ## Tech Stack
 
