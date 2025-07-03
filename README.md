@@ -1,92 +1,323 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sport Club Management System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A comprehensive backend system for managing sport club operations including members, sports, and subscriptions. Built with NestJS, TypeScript, and Supabase.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Environment Setup](#environment-setup)
+- [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+  - [Members API](#members-api)
+  - [Sports API](#sports-api)
+  - [Subscriptions API](#subscriptions-api)
+- [Testing](#testing)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- 🏃‍♂️ **Member Management**: Create, read, update, and delete club members
+- ⚽ **Sport Management**: Manage different sports with pricing and gender restrictions
+- 📝 **Subscription Management**: Handle member subscriptions to sports with different types (group/private)
+- 🛡️ **Data Validation**: Comprehensive input validation using class-validator
+- ⚡ **Caching**: Redis-based caching for better performance
+- 🔄 **Real-time Database**: Supabase integration for real-time data management
+- 🧪 **Testing**: Comprehensive unit and e2e testing setup
 
+## Tech Stack
+
+- **Framework**: [NestJS](https://nestjs.com/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Database**: [Supabase](https://supabase.com/) (PostgreSQL)
+- **ORM**: [TypeORM](https://typeorm.io/)
+- **Validation**: [class-validator](https://github.com/typestack/class-validator)
+- **Testing**: [Jest](https://jestjs.io/)
+- **Caching**: [cache-manager](https://github.com/BryanDonovan/node-cache-manager)
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [Git](https://git-scm.com/)
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/M-Bahy/sport-club-managment.git
+   cd sport-club-managment
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+## Environment Setup
+
+1. **Create environment file**
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Configure environment variables**
+   
+   Update the `.env` file with your Supabase credentials:
+   ```env
+   # Supabase Configuration
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_KEY=your_supabase_anon_key
+   
+   # Application Configuration
+   PORT=3000
+   NODE_ENV=development
+   ```
+
+3. **Database Setup**
+   
+   Ensure your Supabase database is set up with the required tables for members, sports, and subscriptions. The application uses TypeORM entities to define the database schema.
+
+## Running the Application
+
+### Development Mode
 ```bash
-$ npm install
+# Start the application in development mode with hot reload
+npm run start:dev
 ```
 
-## Compile and run the project
-
+### Production Mode
 ```bash
-# development
-$ npm run start
+# Build the application
+npm run build
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Start the application in production mode
+npm run start:prod
 ```
 
-## Run tests
-
+### Debug Mode
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Start the application in debug mode
+npm run start:debug
 ```
 
-## Deployment
+The application will be available at `http://localhost:3000` (or the port specified in your environment variables).
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## API Documentation
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+### Base URL
+```
+http://localhost:3000
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Members API
 
-## Resources
+#### Create Member
+- **POST** `/members`
+- **Body**:
+  ```json
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "gender": "male",
+    "dob": "1990-01-15",
+    "associatedMemberId": "uuid-optional"
+  }
+  ```
+- **Response**: Created member object
 
-Check out a few resources that may come in handy when working with NestJS:
+#### Get All Members
+- **GET** `/members`
+- **Response**: Array of all members
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+#### Get Member by ID
+- **GET** `/members/:id`
+- **Response**: Member object
 
-## Support
+#### Update Member
+- **PATCH** `/members/:id`
+- **Body**: Partial member object
+- **Response**: Updated member object
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### Delete Member
+- **DELETE** `/members/:id`
+- **Response**: Deleted member object
+
+### Sports API
+
+#### Create Sport
+- **POST** `/sports`
+- **Body**:
+  ```json
+  {
+    "name": "Football",
+    "price": 100.50,
+    "allowedGender": "male"
+  }
+  ```
+- **Response**: Created sport object
+
+#### Get All Sports
+- **GET** `/sports`
+- **Cache**: 5 minutes TTL
+- **Response**: Array of all sports
+
+#### Get Sport by ID
+- **GET** `/sports/:id`
+- **Response**: Sport object
+
+#### Update Sport
+- **PATCH** `/sports/:id`
+- **Body**: Partial sport object
+- **Response**: Updated sport object
+
+#### Delete Sport
+- **DELETE** `/sports/:id`
+- **Response**: Deleted sport object
+
+### Subscriptions API
+
+#### Create Subscription
+- **POST** `/subscriptions`
+- **Body**:
+  ```json
+  {
+    "memberId": "member-uuid",
+    "sportId": "sport-uuid",
+    "subscriptionDate": "2024-01-15",
+    "subscriptionType": "group"
+  }
+  ```
+- **Response**: Created subscription object
+
+#### Get All Subscriptions
+- **GET** `/subscriptions`
+- **Response**: Array of all subscriptions
+
+#### Get Subscriptions by Member ID
+- **GET** `/subscriptions/member/:memberId`
+- **Response**: Array of subscriptions for the specified member
+
+#### Get Subscriptions by Sport ID
+- **GET** `/subscriptions/sport/:sportId`
+- **Response**: Array of subscriptions for the specified sport
+
+#### Update Subscription
+- **PATCH** `/subscriptions`
+- **Body**: Update subscription DTO
+- **Response**: Updated subscription object
+
+#### Delete Subscription (Unsubscribe)
+- **DELETE** `/subscriptions`
+- **Body**: Unsubscribe DTO
+- **Response**: Success message
+
+### Data Models
+
+#### Gender Enum
+```typescript
+enum Gender {
+  MALE = 'male',
+  FEMALE = 'female'
+}
+```
+
+#### Subscription Type Enum
+```typescript
+enum SubscriptionType {
+  GROUP = 'group',
+  PRIVATE = 'private'
+}
+```
+
+## Testing
+
+### Run Unit Tests
+```bash
+npm run test
+```
+
+### Run Tests in Watch Mode
+```bash
+npm run test:watch
+```
+
+### Run Test Coverage
+```bash
+npm run test:cov
+```
+
+### Run E2E Tests
+```bash
+npm run test:e2e
+```
+
+## Project Structure
+
+```
+src/
+├── app.controller.ts          # Main application controller
+├── app.module.ts             # Root module
+├── app.service.ts            # Main application service
+├── main.ts                   # Application entry point
+├── member/                   # Member module
+│   ├── dto/                  # Data Transfer Objects
+│   ├── entities/             # TypeORM entities
+│   ├── enums/               # Enumerations
+│   ├── member.controller.ts  # Member endpoints
+│   ├── member.module.ts      # Member module definition
+│   └── member.service.ts     # Member business logic
+├── sport/                    # Sport module
+│   ├── dto/
+│   ├── entities/
+│   ├── enums/
+│   ├── sport.controller.ts
+│   ├── sport.module.ts
+│   └── sport.service.ts
+├── subscription/             # Subscription module
+│   ├── dto/
+│   ├── entities/
+│   ├── enums/
+│   ├── subscription.controller.ts
+│   ├── subscription.module.ts
+│   └── subscription.service.ts
+└── supabase/                # Supabase integration
+    ├── supabase.module.ts
+    └── supabase.service.ts
+```
+
+## Development Scripts
+
+- `npm run build` - Build the application
+- `npm run format` - Format code with Prettier
+- `npm run start` - Start the application
+- `npm run start:dev` - Start in development mode with hot reload
+- `npm run start:debug` - Start in debug mode
+- `npm run start:prod` - Start in production mode
+- `npm run lint` - Lint code with ESLint
+- `npm run test` - Run unit tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:cov` - Run tests with coverage
+- `npm run test:debug` - Run tests in debug mode
+- `npm run test:e2e` - Run end-to-end tests
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the UNLICENSED License.
+
+---
+
+**Repository**: [https://github.com/M-Bahy/sport-club-managment.git](https://github.com/M-Bahy/sport-club-managment.git)
