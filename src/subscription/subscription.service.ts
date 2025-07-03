@@ -30,13 +30,16 @@ export class SubscriptionService {
     }
   }
 
-  async subscribe(createSubscriptionDto: CreateSubscriptionDto) : Promise<Subscription> {
+  async subscribe(
+    createSubscriptionDto: CreateSubscriptionDto,
+  ): Promise<Subscription> {
     // DB constrains already in place to check that the member and sport exists
     // and check that their combination is unique, so no need to add additional checks here.
     const { data, error } = await this.supabase
       .from('subscriptions')
       .insert([createSubscriptionDto])
-      .select(`*,
+      .select(
+        `*,
         member:memberId (
           id,
           firstName,
@@ -46,7 +49,8 @@ export class SubscriptionService {
           id,
           name,
           price
-        )`)
+        )`,
+      )
       .single();
 
     if (error) {
@@ -63,10 +67,8 @@ export class SubscriptionService {
     return data;
   }
 
-  async findAll() : Promise<Subscription[]> {
-    const { data, error } = await this.supabase
-      .from('subscriptions')
-      .select(`*,
+  async findAll(): Promise<Subscription[]> {
+    const { data, error } = await this.supabase.from('subscriptions').select(`*,
         member:memberId (
           id,
           firstName,
@@ -88,8 +90,7 @@ export class SubscriptionService {
     return data;
   }
 
-  async findByMemberId(memberId: string) : Promise<Subscription[]> {
-
+  async findByMemberId(memberId: string): Promise<Subscription[]> {
     const memberExists = await this.memberService.findOne(memberId);
     if (!memberExists) {
       throw new HttpException(
@@ -97,21 +98,23 @@ export class SubscriptionService {
         HttpStatus.NOT_FOUND,
       );
     }
-    
+
     const { data, error } = await this.supabase
       .from('subscriptions')
-      .select(`*,
+      .select(
+        `*,
         sport:sportId (
           id,
           name,
           price
-        )`)
+        )`,
+      )
       .eq('memberId', memberId);
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     if (!data) {
       throw new HttpException(
         `No subscriptions found for member with ID ${memberId}`,
@@ -122,8 +125,7 @@ export class SubscriptionService {
     return data;
   }
 
-  async findBySportId(sportId: string) : Promise<Subscription[]> {
-
+  async findBySportId(sportId: string): Promise<Subscription[]> {
     const sportExists = await this.sportService.findOne(sportId);
     if (!sportExists) {
       throw new HttpException(
@@ -134,18 +136,20 @@ export class SubscriptionService {
 
     const { data, error } = await this.supabase
       .from('subscriptions')
-      .select(`*,
+      .select(
+        `*,
         member:memberId (
           id,
           firstName,
           lastName
-        )`)
+        )`,
+      )
       .eq('sportId', sportId);
 
     if (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     if (!data) {
       throw new HttpException(
         `No subscriptions found for sport with ID ${sportId}`,
@@ -156,15 +160,16 @@ export class SubscriptionService {
     return data;
   }
 
-  async update(updateSubscriptionDto: UpdateSubscriptionDto) : Promise<Subscription> {
-
+  async update(
+    updateSubscriptionDto: UpdateSubscriptionDto,
+  ): Promise<Subscription> {
     if (!updateSubscriptionDto.memberId || !updateSubscriptionDto.sportId) {
       throw new HttpException(
         'Member ID and Sport ID are required to update a subscription',
         HttpStatus.BAD_REQUEST,
       );
     }
-    
+
     const { data, error } = await this.supabase
       .from('subscriptions')
       .update(updateSubscriptionDto)
@@ -194,12 +199,12 @@ export class SubscriptionService {
     return data;
   }
 
-  async unsubscribe(unsubscribeDto: UnsubscribeDto) : Promise<string> {
+  async unsubscribe(unsubscribeDto: UnsubscribeDto): Promise<string> {
     const { data, error } = await this.supabase
       .from('subscriptions')
       .delete()
       .eq('memberId', unsubscribeDto.memberId)
-      .eq('sportId', unsubscribeDto.sportId)  
+      .eq('sportId', unsubscribeDto.sportId)
       .select()
       .single();
 

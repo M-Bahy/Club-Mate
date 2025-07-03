@@ -18,34 +18,36 @@ export class SubscriptionController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
   @Post()
-  create(@Body() createSubscriptionDto: CreateSubscriptionDto) : Promise<Subscription> {
+  create(
+    @Body() createSubscriptionDto: CreateSubscriptionDto,
+  ): Promise<Subscription> {
     return this.subscriptionService.subscribe(createSubscriptionDto);
   }
 
   @Get()
-  findAll() : Promise<Subscription[]> {
+  findAll(): Promise<Subscription[]> {
     return this.subscriptionService.findAll();
   }
 
   @Get('/member/:memberId')
-  findOne(@Param('memberId') memberId: string) : Promise<Subscription[]> {
+  findOne(@Param('memberId') memberId: string): Promise<Subscription[]> {
     return this.subscriptionService.findByMemberId(memberId);
   }
 
   @Get('/sport/:sportId')
-  findBySportId(@Param('sportId') sportId: string) : Promise<Subscription[]> {
+  findBySportId(@Param('sportId') sportId: string): Promise<Subscription[]> {
     return this.subscriptionService.findBySportId(sportId);
   }
 
   @Patch()
   update(
     @Body() updateSubscriptionDto: UpdateSubscriptionDto,
-  ) : Promise<Subscription> {
+  ): Promise<Subscription> {
     return this.subscriptionService.update(updateSubscriptionDto);
   }
 
   @Delete()
-  remove(@Body() unsubscribeDto: UnsubscribeDto) : Promise<string> {
+  remove(@Body() unsubscribeDto: UnsubscribeDto): Promise<string> {
     return this.subscriptionService.unsubscribe(unsubscribeDto);
   }
 }

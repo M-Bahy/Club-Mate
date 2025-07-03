@@ -27,13 +27,13 @@ describe('SubscriptionService', () => {
     member: {
       id: '123e4567-e89b-12d3-a456-426614174000',
       firstName: 'John',
-      lastName: 'Doe'
+      lastName: 'Doe',
     },
     sport: {
       id: '456e7890-e89b-12d3-a456-426614174000',
       name: 'Football',
-      price: 100
-    }
+      price: 100,
+    },
   };
 
   const mockMember: Member = {
@@ -121,7 +121,9 @@ describe('SubscriptionService', () => {
 
     it('should throw error if supabase client initialization fails', () => {
       supabaseService.getClient.mockReturnValue(undefined as any);
-      expect(() => service.onModuleInit()).toThrow('Failed to initialize Supabase client');
+      expect(() => service.onModuleInit()).toThrow(
+        'Failed to initialize Supabase client',
+      );
     });
   });
 
@@ -142,7 +144,9 @@ describe('SubscriptionService', () => {
       const result = await service.subscribe(createSubscriptionDto);
 
       expect(mockSupabaseClient.from).toHaveBeenCalledWith('subscriptions');
-      expect(mockSupabaseClient.insert).toHaveBeenCalledWith([createSubscriptionDto]);
+      expect(mockSupabaseClient.insert).toHaveBeenCalledWith([
+        createSubscriptionDto,
+      ]);
       expect(result).toEqual(mockSubscription);
     });
 
@@ -154,7 +158,7 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.subscribe(createSubscriptionDto)).rejects.toThrow(
-        new HttpException('Database error', HttpStatus.BAD_REQUEST)
+        new HttpException('Database error', HttpStatus.BAD_REQUEST),
       );
     });
 
@@ -165,7 +169,10 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.subscribe(createSubscriptionDto)).rejects.toThrow(
-        new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR)
+        new HttpException(
+          'No data returned from database',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        ),
       );
     });
   });
@@ -192,7 +199,7 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.findAll()).rejects.toThrow(
-        new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR)
+        new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR),
       );
     });
 
@@ -203,7 +210,7 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.findAll()).rejects.toThrow(
-        new HttpException('No subscriptions found', HttpStatus.NOT_FOUND)
+        new HttpException('No subscriptions found', HttpStatus.NOT_FOUND),
       );
     });
   });
@@ -230,7 +237,10 @@ describe('SubscriptionService', () => {
       memberService.findOne.mockResolvedValue(undefined as any);
 
       await expect(service.findByMemberId(memberId)).rejects.toThrow(
-        new HttpException(`Member with ID ${memberId} does not exist`, HttpStatus.NOT_FOUND)
+        new HttpException(
+          `Member with ID ${memberId} does not exist`,
+          HttpStatus.NOT_FOUND,
+        ),
       );
     });
 
@@ -243,7 +253,7 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.findByMemberId(memberId)).rejects.toThrow(
-        new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR)
+        new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR),
       );
     });
 
@@ -255,7 +265,10 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.findByMemberId(memberId)).rejects.toThrow(
-        new HttpException(`No subscriptions found for member with ID ${memberId}`, HttpStatus.NOT_FOUND)
+        new HttpException(
+          `No subscriptions found for member with ID ${memberId}`,
+          HttpStatus.NOT_FOUND,
+        ),
       );
     });
   });
@@ -282,7 +295,10 @@ describe('SubscriptionService', () => {
       sportService.findOne.mockResolvedValue(undefined as any);
 
       await expect(service.findBySportId(sportId)).rejects.toThrow(
-        new HttpException(`Sport with ID ${sportId} does not exist`, HttpStatus.NOT_FOUND)
+        new HttpException(
+          `Sport with ID ${sportId} does not exist`,
+          HttpStatus.NOT_FOUND,
+        ),
       );
     });
 
@@ -295,7 +311,7 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.findBySportId(sportId)).rejects.toThrow(
-        new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR)
+        new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR),
       );
     });
 
@@ -307,7 +323,10 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.findBySportId(sportId)).rejects.toThrow(
-        new HttpException(`No subscriptions found for sport with ID ${sportId}`, HttpStatus.NOT_FOUND)
+        new HttpException(
+          `No subscriptions found for sport with ID ${sportId}`,
+          HttpStatus.NOT_FOUND,
+        ),
       );
     });
   });
@@ -321,31 +340,52 @@ describe('SubscriptionService', () => {
 
     it('should update a subscription successfully', async () => {
       mockSupabaseClient.single.mockResolvedValue({
-        data: { ...mockSubscription, subscriptionType: SubscriptionType.PRIVATE },
+        data: {
+          ...mockSubscription,
+          subscriptionType: SubscriptionType.PRIVATE,
+        },
         error: null,
       });
 
       const result = await service.update(updateSubscriptionDto);
 
-      expect(mockSupabaseClient.update).toHaveBeenCalledWith(updateSubscriptionDto);
-      expect(mockSupabaseClient.eq).toHaveBeenCalledWith('memberId', updateSubscriptionDto.memberId);
-      expect(mockSupabaseClient.eq).toHaveBeenCalledWith('sportId', updateSubscriptionDto.sportId);
+      expect(mockSupabaseClient.update).toHaveBeenCalledWith(
+        updateSubscriptionDto,
+      );
+      expect(mockSupabaseClient.eq).toHaveBeenCalledWith(
+        'memberId',
+        updateSubscriptionDto.memberId,
+      );
+      expect(mockSupabaseClient.eq).toHaveBeenCalledWith(
+        'sportId',
+        updateSubscriptionDto.sportId,
+      );
       expect(result.subscriptionType).toBe(SubscriptionType.PRIVATE);
     });
 
     it('should throw HttpException when memberId is missing', async () => {
       const invalidDto = { ...updateSubscriptionDto, memberId: undefined };
 
-      await expect(service.update(invalidDto as UpdateSubscriptionDto)).rejects.toThrow(
-        new HttpException('Member ID and Sport ID are required to update a subscription', HttpStatus.BAD_REQUEST)
+      await expect(
+        service.update(invalidDto as UpdateSubscriptionDto),
+      ).rejects.toThrow(
+        new HttpException(
+          'Member ID and Sport ID are required to update a subscription',
+          HttpStatus.BAD_REQUEST,
+        ),
       );
     });
 
     it('should throw HttpException when sportId is missing', async () => {
       const invalidDto = { ...updateSubscriptionDto, sportId: undefined };
 
-      await expect(service.update(invalidDto as UpdateSubscriptionDto)).rejects.toThrow(
-        new HttpException('Member ID and Sport ID are required to update a subscription', HttpStatus.BAD_REQUEST)
+      await expect(
+        service.update(invalidDto as UpdateSubscriptionDto),
+      ).rejects.toThrow(
+        new HttpException(
+          'Member ID and Sport ID are required to update a subscription',
+          HttpStatus.BAD_REQUEST,
+        ),
       );
     });
 
@@ -357,7 +397,10 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.update(updateSubscriptionDto)).rejects.toThrow(
-        new HttpException('No subscription found to update', HttpStatus.NOT_FOUND)
+        new HttpException(
+          'No subscription found to update',
+          HttpStatus.NOT_FOUND,
+        ),
       );
     });
 
@@ -369,7 +412,7 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.update(updateSubscriptionDto)).rejects.toThrow(
-        new HttpException('Database error', HttpStatus.BAD_REQUEST)
+        new HttpException('Database error', HttpStatus.BAD_REQUEST),
       );
     });
 
@@ -380,7 +423,10 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.update(updateSubscriptionDto)).rejects.toThrow(
-        new HttpException('No subscription found to update', HttpStatus.NOT_FOUND)
+        new HttpException(
+          'No subscription found to update',
+          HttpStatus.NOT_FOUND,
+        ),
       );
     });
   });
@@ -400,9 +446,17 @@ describe('SubscriptionService', () => {
       const result = await service.unsubscribe(unsubscribeDto);
 
       expect(mockSupabaseClient.delete).toHaveBeenCalled();
-      expect(mockSupabaseClient.eq).toHaveBeenCalledWith('memberId', unsubscribeDto.memberId);
-      expect(mockSupabaseClient.eq).toHaveBeenCalledWith('sportId', unsubscribeDto.sportId);
-      expect(result).toBe(`User with id ${unsubscribeDto.memberId} unsubscribed from sport with id ${unsubscribeDto.sportId} successfully`);
+      expect(mockSupabaseClient.eq).toHaveBeenCalledWith(
+        'memberId',
+        unsubscribeDto.memberId,
+      );
+      expect(mockSupabaseClient.eq).toHaveBeenCalledWith(
+        'sportId',
+        unsubscribeDto.sportId,
+      );
+      expect(result).toBe(
+        `User with id ${unsubscribeDto.memberId} unsubscribed from sport with id ${unsubscribeDto.sportId} successfully`,
+      );
     });
 
     it('should return message when subscription not found (PGRST116 error)', async () => {
@@ -414,7 +468,9 @@ describe('SubscriptionService', () => {
 
       const result = await service.unsubscribe(unsubscribeDto);
 
-      expect(result).toBe(`Subscription for user with id ${unsubscribeDto.memberId} and sport with id ${unsubscribeDto.sportId} was not found, nothing to delete`);
+      expect(result).toBe(
+        `Subscription for user with id ${unsubscribeDto.memberId} and sport with id ${unsubscribeDto.sportId} was not found, nothing to delete`,
+      );
     });
 
     it('should throw HttpException for other database errors', async () => {
@@ -425,7 +481,7 @@ describe('SubscriptionService', () => {
       });
 
       await expect(service.unsubscribe(unsubscribeDto)).rejects.toThrow(
-        new HttpException('Database error', HttpStatus.BAD_REQUEST)
+        new HttpException('Database error', HttpStatus.BAD_REQUEST),
       );
     });
   });

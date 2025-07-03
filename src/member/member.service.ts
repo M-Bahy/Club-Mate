@@ -89,26 +89,26 @@ export class MemberService {
     return data;
   }
 
-   async remove(id: string): Promise<Member> {
+  async remove(id: string): Promise<Member> {
     const { data, error } = await this.supabase
       .from('members')
       .delete()
       .eq('id', id)
-      .select() 
+      .select()
       .single();
-  
+
     if (error) {
       if (error.code === 'PGRST116') {
         throw new HttpException('Member not found', HttpStatus.NOT_FOUND);
       }
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
-  
+
     if (!data) {
       throw new HttpException('Member not found', HttpStatus.NOT_FOUND);
     }
-  
-    return data; 
+
+    return data;
   }
 
   async findAll(): Promise<Member[]> {

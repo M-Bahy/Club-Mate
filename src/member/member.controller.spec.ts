@@ -86,7 +86,9 @@ describe('MemberController', () => {
       mockMemberService.create.mockRejectedValue(error);
 
       // Act & Assert
-      await expect(controller.create(mockCreateMemberDto)).rejects.toThrow(error);
+      await expect(controller.create(mockCreateMemberDto)).rejects.toThrow(
+        error,
+      );
       expect(service.create).toHaveBeenCalledWith(mockCreateMemberDto);
     });
   });
@@ -157,7 +159,10 @@ describe('MemberController', () => {
       const result = await controller.update(memberId, mockUpdateMemberDto);
 
       // Assert
-      expect(service.update).toHaveBeenCalledWith(memberId, mockUpdateMemberDto);
+      expect(service.update).toHaveBeenCalledWith(
+        memberId,
+        mockUpdateMemberDto,
+      );
       expect(service.update).toHaveBeenCalledTimes(1);
       expect(result).toEqual(updatedMember);
     });
@@ -168,8 +173,13 @@ describe('MemberController', () => {
       mockMemberService.update.mockRejectedValue(error);
 
       // Act & Assert
-      await expect(controller.update(memberId, mockUpdateMemberDto)).rejects.toThrow(error);
-      expect(service.update).toHaveBeenCalledWith(memberId, mockUpdateMemberDto);
+      await expect(
+        controller.update(memberId, mockUpdateMemberDto),
+      ).rejects.toThrow(error);
+      expect(service.update).toHaveBeenCalledWith(
+        memberId,
+        mockUpdateMemberDto,
+      );
     });
   });
 

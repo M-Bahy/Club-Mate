@@ -83,8 +83,12 @@ describe('MemberService', () => {
     });
 
     it('should throw error if Supabase client is not available', () => {
-      jest.spyOn(supabaseService, 'getClient').mockReturnValue(undefined as any);
-      expect(() => service.onModuleInit()).toThrow('Failed to initialize Supabase client');
+      jest
+        .spyOn(supabaseService, 'getClient')
+        .mockReturnValue(undefined as any);
+      expect(() => service.onModuleInit()).toThrow(
+        'Failed to initialize Supabase client',
+      );
     });
   });
 
@@ -123,7 +127,10 @@ describe('MemberService', () => {
       });
 
       await expect(service.create(createMemberDto)).rejects.toThrow(
-        new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR),
+        new HttpException(
+          'No data returned from database',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        ),
       );
     });
   });
@@ -328,7 +335,10 @@ describe('MemberService', () => {
       });
 
       await expect(service.findAll()).rejects.toThrow(
-        new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR),
+        new HttpException(
+          'No data returned from database',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        ),
       );
     });
 

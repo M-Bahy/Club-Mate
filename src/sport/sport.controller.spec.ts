@@ -15,7 +15,7 @@ describe('SportController', () => {
   const mockSport: Sport = {
     id: '123e4567-e89b-12d3-a456-426614174000',
     name: 'Football',
-    price: 50.00,
+    price: 50.0,
     allowedGender: Gender.MIX,
     createdAt: new Date('2023-01-01T00:00:00.000Z'),
     updatedAt: new Date('2023-01-01T00:00:00.000Z'),
@@ -23,13 +23,13 @@ describe('SportController', () => {
 
   const mockCreateSportDto: CreateSportDto = {
     name: 'Basketball',
-    price: 30.00,
+    price: 30.0,
     allowedGender: Gender.MALE,
   };
 
   const mockUpdateSportDto: UpdateSportDto = {
     name: 'Updated Football',
-    price: 60.00,
+    price: 60.0,
   };
 
   const mockSportService = {
@@ -89,14 +89,19 @@ describe('SportController', () => {
       const error = new HttpException('Invalid data', HttpStatus.BAD_REQUEST);
       mockSportService.create.mockRejectedValue(error);
 
-      await expect(controller.create(mockCreateSportDto)).rejects.toThrow(error);
+      await expect(controller.create(mockCreateSportDto)).rejects.toThrow(
+        error,
+      );
       expect(sportService.create).toHaveBeenCalledWith(mockCreateSportDto);
     });
   });
 
   describe('findAll', () => {
     it('should return an array of sports', async () => {
-      const expectedSports = [mockSport, { ...mockSport, id: '456', name: 'Tennis' }];
+      const expectedSports = [
+        mockSport,
+        { ...mockSport, id: '456', name: 'Tennis' },
+      ];
       mockSportService.findAll.mockResolvedValue(expectedSports);
 
       const result = await controller.findAll();
@@ -116,7 +121,10 @@ describe('SportController', () => {
     });
 
     it('should throw an error when findAll fails', async () => {
-      const error = new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR);
+      const error = new HttpException(
+        'Database error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
       mockSportService.findAll.mockRejectedValue(error);
 
       await expect(controller.findAll()).rejects.toThrow(error);
@@ -164,7 +172,10 @@ describe('SportController', () => {
 
       const result = await controller.update(sportId, mockUpdateSportDto);
 
-      expect(sportService.update).toHaveBeenCalledWith(sportId, mockUpdateSportDto);
+      expect(sportService.update).toHaveBeenCalledWith(
+        sportId,
+        mockUpdateSportDto,
+      );
       expect(sportService.update).toHaveBeenCalledTimes(1);
       expect(result).toEqual(updatedSport);
     });
@@ -173,18 +184,26 @@ describe('SportController', () => {
       const error = new HttpException('Sport not found', HttpStatus.NOT_FOUND);
       mockSportService.update.mockRejectedValue(error);
 
-      await expect(controller.update(sportId, mockUpdateSportDto)).rejects.toThrow(error);
-      expect(sportService.update).toHaveBeenCalledWith(sportId, mockUpdateSportDto);
+      await expect(
+        controller.update(sportId, mockUpdateSportDto),
+      ).rejects.toThrow(error);
+      expect(sportService.update).toHaveBeenCalledWith(
+        sportId,
+        mockUpdateSportDto,
+      );
     });
 
     it('should handle partial updates', async () => {
-      const partialUpdateDto = { price: 75.00 };
-      const updatedSport = { ...mockSport, price: 75.00 };
+      const partialUpdateDto = { price: 75.0 };
+      const updatedSport = { ...mockSport, price: 75.0 };
       mockSportService.update.mockResolvedValue(updatedSport);
 
       const result = await controller.update(sportId, partialUpdateDto);
 
-      expect(sportService.update).toHaveBeenCalledWith(sportId, partialUpdateDto);
+      expect(sportService.update).toHaveBeenCalledWith(
+        sportId,
+        partialUpdateDto,
+      );
       expect(result).toEqual(updatedSport);
     });
 
@@ -192,8 +211,13 @@ describe('SportController', () => {
       const error = new HttpException('Invalid data', HttpStatus.BAD_REQUEST);
       mockSportService.update.mockRejectedValue(error);
 
-      await expect(controller.update(sportId, mockUpdateSportDto)).rejects.toThrow(error);
-      expect(sportService.update).toHaveBeenCalledWith(sportId, mockUpdateSportDto);
+      await expect(
+        controller.update(sportId, mockUpdateSportDto),
+      ).rejects.toThrow(error);
+      expect(sportService.update).toHaveBeenCalledWith(
+        sportId,
+        mockUpdateSportDto,
+      );
     });
   });
 
@@ -219,7 +243,10 @@ describe('SportController', () => {
     });
 
     it('should handle database errors during deletion', async () => {
-      const error = new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR);
+      const error = new HttpException(
+        'Database error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
       mockSportService.remove.mockRejectedValue(error);
 
       await expect(controller.remove(sportId)).rejects.toThrow(error);
@@ -251,7 +278,10 @@ describe('SportController', () => {
       expect(sportService.create).toHaveBeenCalledWith(mockCreateSportDto);
       expect(sportService.findAll).toHaveBeenCalledWith();
       expect(sportService.findOne).toHaveBeenCalledWith('test-id');
-      expect(sportService.update).toHaveBeenCalledWith('test-id', mockUpdateSportDto);
+      expect(sportService.update).toHaveBeenCalledWith(
+        'test-id',
+        mockUpdateSportDto,
+      );
       expect(sportService.remove).toHaveBeenCalledWith('test-id');
     });
   });

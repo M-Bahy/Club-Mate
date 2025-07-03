@@ -17,7 +17,7 @@ describe('SportService', () => {
   const mockSport: Sport = {
     id: 'test-uuid',
     name: 'Football',
-    price: 100.00,
+    price: 100.0,
     allowedGender: Gender.MIX,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -25,13 +25,13 @@ describe('SportService', () => {
 
   const mockCreateSportDto: CreateSportDto = {
     name: 'Football',
-    price: 100.00,
+    price: 100.0,
     allowedGender: Gender.MIX,
   };
 
   const mockUpdateSportDto: UpdateSportDto = {
     name: 'Updated Football',
-    price: 150.00,
+    price: 150.0,
   };
 
   beforeEach(async () => {
@@ -95,9 +95,14 @@ describe('SportService', () => {
         getClient: jest.fn().mockReturnValue(null),
       };
 
-      const testService = new SportService(mockSupabaseServiceFail as any, cacheManager);
-      
-      expect(() => testService.onModuleInit()).toThrow('Failed to initialize Supabase client');
+      const testService = new SportService(
+        mockSupabaseServiceFail as any,
+        cacheManager,
+      );
+
+      expect(() => testService.onModuleInit()).toThrow(
+        'Failed to initialize Supabase client',
+      );
     });
   });
 
@@ -111,7 +116,9 @@ describe('SportService', () => {
       const result = await service.create(mockCreateSportDto);
 
       expect(mockSupabaseClient.from).toHaveBeenCalledWith('sports');
-      expect(mockSupabaseClient.insert).toHaveBeenCalledWith([mockCreateSportDto]);
+      expect(mockSupabaseClient.insert).toHaveBeenCalledWith([
+        mockCreateSportDto,
+      ]);
       expect(mockSupabaseClient.select).toHaveBeenCalled();
       expect(mockSupabaseClient.single).toHaveBeenCalled();
       expect(cacheManager.del).toHaveBeenCalledWith('sports:all');
@@ -137,7 +144,10 @@ describe('SportService', () => {
       });
 
       await expect(service.create(mockCreateSportDto)).rejects.toThrow(
-        new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR),
+        new HttpException(
+          'No data returned from database',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        ),
       );
     });
   });
@@ -166,7 +176,11 @@ describe('SportService', () => {
       expect(cacheManager.get).toHaveBeenCalledWith('sports:all');
       expect(mockSupabaseClient.from).toHaveBeenCalledWith('sports');
       expect(mockSupabaseClient.select).toHaveBeenCalled();
-      expect(cacheManager.set).toHaveBeenCalledWith('sports:all', [mockSport], 300000);
+      expect(cacheManager.set).toHaveBeenCalledWith(
+        'sports:all',
+        [mockSport],
+        300000,
+      );
       expect(result).toEqual([mockSport]);
     });
 
@@ -191,7 +205,10 @@ describe('SportService', () => {
       });
 
       await expect(service.findAll()).rejects.toThrow(
-        new HttpException('No data returned from database', HttpStatus.INTERNAL_SERVER_ERROR),
+        new HttpException(
+          'No data returned from database',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        ),
       );
     });
   });
@@ -259,7 +276,9 @@ describe('SportService', () => {
       const result = await service.update('test-uuid', mockUpdateSportDto);
 
       expect(mockSupabaseClient.from).toHaveBeenCalledWith('sports');
-      expect(mockSupabaseClient.update).toHaveBeenCalledWith(mockUpdateSportDto);
+      expect(mockSupabaseClient.update).toHaveBeenCalledWith(
+        mockUpdateSportDto,
+      );
       expect(mockSupabaseClient.eq).toHaveBeenCalledWith('id', 'test-uuid');
       expect(mockSupabaseClient.select).toHaveBeenCalled();
       expect(mockSupabaseClient.single).toHaveBeenCalled();
@@ -274,7 +293,9 @@ describe('SportService', () => {
         error: mockError,
       });
 
-      await expect(service.update('non-existent-id', mockUpdateSportDto)).rejects.toThrow(
+      await expect(
+        service.update('non-existent-id', mockUpdateSportDto),
+      ).rejects.toThrow(
         new HttpException('Sport not found', HttpStatus.NOT_FOUND),
       );
     });
@@ -286,7 +307,9 @@ describe('SportService', () => {
         error: mockError,
       });
 
-      await expect(service.update('test-uuid', mockUpdateSportDto)).rejects.toThrow(
+      await expect(
+        service.update('test-uuid', mockUpdateSportDto),
+      ).rejects.toThrow(
         new HttpException('Database error', HttpStatus.BAD_REQUEST),
       );
     });
@@ -297,7 +320,9 @@ describe('SportService', () => {
         error: null,
       });
 
-      await expect(service.update('test-uuid', mockUpdateSportDto)).rejects.toThrow(
+      await expect(
+        service.update('test-uuid', mockUpdateSportDto),
+      ).rejects.toThrow(
         new HttpException('Sport not found', HttpStatus.NOT_FOUND),
       );
     });

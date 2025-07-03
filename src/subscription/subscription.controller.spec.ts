@@ -79,7 +79,9 @@ describe('SubscriptionController', () => {
 
       const result = await controller.create(createSubscriptionDto);
 
-      expect(subscriptionService.subscribe).toHaveBeenCalledWith(createSubscriptionDto);
+      expect(subscriptionService.subscribe).toHaveBeenCalledWith(
+        createSubscriptionDto,
+      );
       expect(result).toEqual(mockSubscription);
     });
 
@@ -94,8 +96,12 @@ describe('SubscriptionController', () => {
       const error = new Error('Service error');
       subscriptionService.subscribe.mockRejectedValue(error);
 
-      await expect(controller.create(createSubscriptionDto)).rejects.toThrow(error);
-      expect(subscriptionService.subscribe).toHaveBeenCalledWith(createSubscriptionDto);
+      await expect(controller.create(createSubscriptionDto)).rejects.toThrow(
+        error,
+      );
+      expect(subscriptionService.subscribe).toHaveBeenCalledWith(
+        createSubscriptionDto,
+      );
     });
   });
 
@@ -171,12 +177,17 @@ describe('SubscriptionController', () => {
         subscriptionType: SubscriptionType.PRIVATE,
       };
 
-      const updatedSubscription = { ...mockSubscription, subscriptionType: SubscriptionType.PRIVATE };
+      const updatedSubscription = {
+        ...mockSubscription,
+        subscriptionType: SubscriptionType.PRIVATE,
+      };
       subscriptionService.update.mockResolvedValue(updatedSubscription);
 
       const result = await controller.update(updateSubscriptionDto);
 
-      expect(subscriptionService.update).toHaveBeenCalledWith(updateSubscriptionDto);
+      expect(subscriptionService.update).toHaveBeenCalledWith(
+        updateSubscriptionDto,
+      );
       expect(result).toEqual(updatedSubscription);
     });
 
@@ -190,8 +201,12 @@ describe('SubscriptionController', () => {
       const error = new Error('Service error');
       subscriptionService.update.mockRejectedValue(error);
 
-      await expect(controller.update(updateSubscriptionDto)).rejects.toThrow(error);
-      expect(subscriptionService.update).toHaveBeenCalledWith(updateSubscriptionDto);
+      await expect(controller.update(updateSubscriptionDto)).rejects.toThrow(
+        error,
+      );
+      expect(subscriptionService.update).toHaveBeenCalledWith(
+        updateSubscriptionDto,
+      );
     });
   });
 
@@ -202,12 +217,15 @@ describe('SubscriptionController', () => {
         sportId: '456e7890-e89b-12d3-a456-426614174000',
       };
 
-      const successMessage = 'User with id 123e4567-e89b-12d3-a456-426614174000 unsubscribed from sport with id 456e7890-e89b-12d3-a456-426614174000 successfully';
+      const successMessage =
+        'User with id 123e4567-e89b-12d3-a456-426614174000 unsubscribed from sport with id 456e7890-e89b-12d3-a456-426614174000 successfully';
       subscriptionService.unsubscribe.mockResolvedValue(successMessage);
 
       const result = await controller.remove(unsubscribeDto);
 
-      expect(subscriptionService.unsubscribe).toHaveBeenCalledWith(unsubscribeDto);
+      expect(subscriptionService.unsubscribe).toHaveBeenCalledWith(
+        unsubscribeDto,
+      );
       expect(result).toBe(successMessage);
     });
 
@@ -221,7 +239,9 @@ describe('SubscriptionController', () => {
       subscriptionService.unsubscribe.mockRejectedValue(error);
 
       await expect(controller.remove(unsubscribeDto)).rejects.toThrow(error);
-      expect(subscriptionService.unsubscribe).toHaveBeenCalledWith(unsubscribeDto);
+      expect(subscriptionService.unsubscribe).toHaveBeenCalledWith(
+        unsubscribeDto,
+      );
     });
   });
 });
