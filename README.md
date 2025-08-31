@@ -1,4 +1,4 @@
-# Sport Club Management System
+# Club Mate: A Club Management Platform
 
 A comprehensive backend system for managing sport club operations including members, sports, and subscriptions. Built with NestJS, TypeScript, and Supabase.
 
